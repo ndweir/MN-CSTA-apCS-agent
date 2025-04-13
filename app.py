@@ -353,7 +353,11 @@ def upload_file():
         return redirect(request.url)
     
     file = request.files['file']
+    allowed_curriculum_types = ['ap_cs_a', 'ap_cs_principles']
     curriculum_type = request.form.get('curriculum_type', 'ap_cs_a')
+    if curriculum_type not in allowed_curriculum_types:
+        flash('Invalid curriculum type')
+        return redirect(request.url)
     
     if file.filename == '':
         flash('No selected file')
