@@ -19,7 +19,7 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
 3. Click **Next**
 4. Select **Flask** as your framework
 5. Select **Python 3.8** (or the latest available version)
-6. Set your project path to `/home/yourusername/codecoach-ai`
+6. Set your project path to `/home/MNcodecoach/mysite`
 7. For the WSGI configuration file, use the default path
 
 ## Step 3: Clone Your Repository
@@ -28,8 +28,8 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
 2. Start a new **Bash console**
 3. Clone your repository:
    ```bash
-   git clone https://github.com/ndweir/MN-CSTA-apCS-agent.git codecoach-ai
-   cd codecoach-ai
+   git clone https://github.com/ndweir/MN-CSTA-apCS-agent.git mysite
+   cd mysite
    ```
 
 ## Step 4: Set Up a Virtual Environment
@@ -53,7 +53,7 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
    import sys
    
    # Add your project directory to the Python path
-   path = '/home/yourusername/codecoach-ai'
+   path = '/home/MNcodecoach/mysite'
    if path not in sys.path:
        sys.path.append(path)
    
@@ -67,14 +67,14 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
 1. Go to the **Web** tab
 2. Under **Static files**, add the following mapping:
    - URL: `/static/`
-   - Directory: `/home/yourusername/codecoach-ai/static/`
+   - Directory: `/home/MNcodecoach/mysite/static/`
 
 ## Step 7: Update the Virtual Environment Path
 
 1. Go to the **Web** tab
 2. Under **Virtualenv**, enter the path to your virtual environment:
    ```
-   /home/yourusername/codecoach-ai/venv
+   /home/MNcodecoach/mysite/venv
    ```
 
 ## Step 8: Reload Your Web App
@@ -86,7 +86,7 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
 
 Your application will now be available at:
 ```
-yourusername.pythonanywhere.com
+MNcodecoach.pythonanywhere.com
 ```
 
 ## Troubleshooting
@@ -107,7 +107,7 @@ When you make changes to your GitHub repository:
 1. Open a Bash console
 2. Navigate to your project directory:
    ```bash
-   cd codecoach-ai
+   cd mysite
    ```
 3. Pull the latest changes:
    ```bash
@@ -122,7 +122,7 @@ The free tier of PythonAnywhere has some limitations:
 - Your app may sleep after periods of inactivity
 - Limited CPU time and bandwidth
 - Limited storage (512MB)
-- No custom domains (you'll use yourusername.pythonanywhere.com)
+- No custom domains (you'll use MNcodecoach.pythonanywhere.com)
 
 These limitations are acceptable for a classroom demonstration or low-traffic educational tool.
 
