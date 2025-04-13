@@ -522,11 +522,16 @@ def search_curriculum(question):
     # If no match is found
     return {'found': False}
 
-# Favicon route
+# Favicon routes
 @app.route('/favicon.ico')
-def favicon():
+def favicon_ico():
     return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+                               'favicon.png', mimetype='image/png')
+
+@app.route('/favicon.png')
+def favicon_png():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.png', mimetype='image/png')
 
 # Load curriculum data on startup
 try:
