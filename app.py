@@ -8,6 +8,10 @@ import re
 import uuid
 import sqlite3
 import ipaddress
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 # Use environment variable for secret key in production, fallback to a random key for development
