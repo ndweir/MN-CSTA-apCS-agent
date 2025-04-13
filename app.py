@@ -365,7 +365,10 @@ def upload_file():
     
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        save_path = os.path.join(app.config['UPLOAD_FOLDER'], curriculum_type, filename)
+        save_path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], curriculum_type, filename))
+        if not save_path.startswith(os.path.normpath(app.config['UPLOAD_FOLDER'])):
+            flash('Invalid file path')
+            return redirect(request.url)
         file.save(save_path)
         
         # Reload curriculum data
