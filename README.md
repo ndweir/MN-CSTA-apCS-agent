@@ -164,7 +164,7 @@ We welcome contributions from students, teachers, and developers! Here's how you
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License -- that means it's open source and the nobody can make me say otherwise
 
 ## 🙏 Acknowledgments
 
@@ -174,4 +174,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-For questions or feedback, please open an issue on this repository or contact the project maintainer.
+For questions or feedback, please open an issue on this repository or contact me!
