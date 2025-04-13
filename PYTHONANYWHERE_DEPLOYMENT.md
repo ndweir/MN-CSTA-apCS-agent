@@ -77,7 +77,18 @@ This guide will walk you through deploying the CodeCoach AI application on Pytho
    /home/MNcodecoach/mysite/venv
    ```
 
-## Step 8: Reload Your Web App
+## Step 8: Set Up Environment Variables for Security
+
+1. Go to the **Web** tab
+2. Under the **WSGI configuration file** section, find the **Environment variables** section
+3. Add the following environment variables:
+   - `SECRET_KEY`: A long, random string (e.g., generate one with `python -c "import os; print(os.urandom(24).hex())"` in the console)
+   - `ADMIN_USERNAME`: Choose a secure username (not 'admin')
+   - `ADMIN_PASSWORD`: Choose a strong password
+
+**Important**: These environment variables will keep your admin credentials secure and not visible in your code.
+
+## Step 9: Reload Your Web App
 
 1. Go to the **Web** tab
 2. Click the **Reload** button for your web app

@@ -10,7 +10,8 @@ import sqlite3
 import ipaddress
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'codecoach-secret-key'
+# Use environment variable for secret key in production, fallback to a random key for development
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'curriculum')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'txt', 'md', 'json'}
@@ -230,8 +231,38 @@ def home():
         log_access('student', request.remote_addr, 'page_view', '/')
     return render_template('index.html')
 
+# Admin login route
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    error = None
+    if request.method == 'POST':
+        # Get credentials from environment variables or use defaults for development
+        admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+        admin_password = os.environ.get('ADMIN_PASSWORD', 'password')
+        
+        # Check credentials
+        if request.form['username'] == admin_username and request.form['password'] == admin_password:
+            session['admin_logged_in'] = True
+            log_access('teacher', request.remote_addr, 'admin_login', 'success')
+            return redirect(url_for('admin'))
+        else:
+            error = 'Invalid credentials'
+            log_access('unknown', request.remote_addr, 'admin_login_attempt', 'failed')
+    
+    return render_template('admin_login.html', error=error)
+
+# Admin logout route
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    return redirect(url_for('admin_login'))
+
 @app.route('/admin')
 def admin():
+    # Check if user is logged in
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    
     # Log teacher/admin access
     if request.remote_addr:
         log_access('teacher', request.remote_addr, 'admin_access', '/admin')
