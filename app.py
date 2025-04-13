@@ -546,5 +546,6 @@ except Exception as e:
 
 if __name__ == '__main__':
     # Use this for local development
-    app.run(debug=True, port=5001)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1', 't']
+    app.run(debug=debug_mode, port=5001)
 # For production on PythonAnywhere, the WSGI file will import the 'app' variable
