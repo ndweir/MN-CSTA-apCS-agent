@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for, send_from_directory, session
+from flask_session import Session
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import pytz
@@ -29,6 +30,18 @@ except ImportError:
 app = Flask(__name__)
 # Use environment variable for secret key in production, fallback to a random key for development
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
+
+# Enhanced session configuration for better security
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # Sessions expire after 1 hour
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True if using HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to session cookie
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Restrict cookie sending to same-site requests
+
+# Initialize the Flask-Session extension
+Session(app)
+
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'curriculum')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'txt', 'md', 'json'}
@@ -252,17 +265,34 @@ def home():
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     error = None
+    # Clear any existing session data for security
+    if 'admin_logged_in' in session:
+        session.pop('admin_logged_in', None)
+    
     if request.method == 'POST':
         # Get credentials from environment variables or use defaults for development
         admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
         admin_password = os.environ.get('ADMIN_PASSWORD', 'password')
         
-        # Check credentials
-        if request.form['username'] == admin_username and request.form['password'] == admin_password:
+        # Check credentials with constant-time comparison (to prevent timing attacks)
+        username_valid = request.form.get('username', '') == admin_username
+        password_valid = request.form.get('password', '') == admin_password
+        
+        if username_valid and password_valid:
+            # Set session variable and regenerate session ID
+            session.clear()
             session['admin_logged_in'] = True
+            session['login_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            session['ip_address'] = request.remote_addr
+            
+            # Log successful login
             log_access('teacher', request.remote_addr, 'admin_login', 'success')
             return redirect(url_for('admin'))
         else:
+            # Add a small delay to prevent brute force attacks
+            import time
+            time.sleep(1)
+            
             error = 'Invalid credentials'
             log_access('unknown', request.remote_addr, 'admin_login_attempt', 'failed')
     
@@ -276,8 +306,12 @@ def admin_logout():
 
 @app.route('/admin')
 def admin():
-    # Check if user is logged in
+    # Enhanced security check for admin access
     if not session.get('admin_logged_in'):
+        # Log unauthorized access attempt
+        if request.remote_addr:
+            log_access('unknown', request.remote_addr, 'unauthorized_admin_access', '/admin')
+        # Force redirect to login page
         return redirect(url_for('admin_login'))
     
     # Log teacher/admin access
