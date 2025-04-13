@@ -4,8 +4,6 @@
 
 CodeCoach AI is an accessible, curriculum-aligned tutoring assistant designed specifically for Minnesota high school students taking Advanced Placement Computer Science courses (AP CS A and AP CS Principles). This open-source project aims to provide 24/7 support for students learning computer science concepts, with strict alignment to College Board curriculum standards.
 
-![CodeCoach AI Screenshot](https://raw.githubusercontent.com/ndweir/apCS-agentic-ai/main/docs/images/screenshot.png)
-
 ## 🎯 Project Goals
 
 - Provide equitable access to high-quality CS tutoring for all Minnesota students
