@@ -10,8 +10,21 @@ import sqlite3
 import ipaddress
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Try to load environment variables from .env file
 load_dotenv()
+
+# For PythonAnywhere free tier: try to import from secrets.py if available
+try:
+    import secrets
+    if not os.environ.get('SECRET_KEY') and hasattr(secrets, 'SECRET_KEY'):
+        os.environ['SECRET_KEY'] = secrets.SECRET_KEY
+    if not os.environ.get('ADMIN_USERNAME') and hasattr(secrets, 'ADMIN_USERNAME'):
+        os.environ['ADMIN_USERNAME'] = secrets.ADMIN_USERNAME
+    if not os.environ.get('ADMIN_PASSWORD') and hasattr(secrets, 'ADMIN_PASSWORD'):
+        os.environ['ADMIN_PASSWORD'] = secrets.ADMIN_PASSWORD
+except ImportError:
+    # secrets.py not available, will use environment variables or defaults
+    pass
 
 app = Flask(__name__)
 # Use environment variable for secret key in production, fallback to a random key for development
