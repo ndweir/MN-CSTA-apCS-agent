@@ -1,0 +1,21 @@
+{
+  "title": "Unit 1: Digital Information",
+  "description": "This unit explores how digital data is represented and transmitted in computing systems.",
+  "topics": {
+    "binary": {
+      "title": "Binary Numbers",
+      "keywords": ["binary", "bits", "base-2", "binary number system"],
+      "content": "Binary is a base-2 number system used by computers to store and process data. In binary, there are only two digits: 0 and 1, called bits (binary digits).\n\nTo convert a binary number to decimal (base-10):\n1. Identify the place value of each bit (from right to left: 2^0, 2^1, 2^2, etc.)\n2. Multiply each bit by its place value\n3. Sum all the results\n\nExample: Binary 1011\n1 × 2^3 = 8\n0 × 2^2 = 0\n1 × 2^1 = 2\n1 × 2^0 = 1\nSum: 8 + 0 + 2 + 1 = 11 (decimal)\n\nTo convert decimal to binary:\n1. Divide the number by 2\n2. Record the remainder (0 or 1)\n3. Repeat with the quotient until it becomes 0\n4. Read the remainders from bottom to top\n\nExample: Decimal 13\n13 ÷ 2 = 6 remainder 1\n6 ÷ 2 = 3 remainder 0\n3 ÷ 2 = 1 remainder 1\n1 ÷ 2 = 0 remainder 1\nBinary: 1101"
+    },
+    "data_representation": {
+      "title": "Data Representation",
+      "keywords": ["data representation", "ASCII", "Unicode", "encoding"],
+      "content": "Different types of data are represented in binary form in computing systems:\n\nText: Characters are mapped to numeric codes using standards like ASCII or Unicode.\nFor example, in ASCII:\n- 'A' is represented as 65 (binary 1000001)\n- 'a' is represented as 97 (binary 1100001)\n- '1' is represented as 49 (binary 110001)\n\nImages: Digital images are made up of pixels, each with color values.\nIn RGB color model, each pixel has three values (red, green, blue).\nFor example, in 24-bit color:\n- Red: (255, 0, 0) or #FF0000\n- Green: (0, 255, 0) or #00FF00\n- Blue: (0, 0, 255) or #0000FF\n\nSound: Digital audio is represented by sampling sound waves at regular intervals.\nEach sample is a numeric value representing the amplitude of the wave at that moment.\nHigher sampling rates and bit depths provide better quality but require more storage."
+    },
+    "abstraction": {
+      "title": "Abstraction",
+      "keywords": ["abstraction", "abstract", "layers", "complexity"],
+      "content": "Abstraction is a fundamental concept in computer science that involves simplifying complex systems by modeling classes of objects and focusing only on relevant details while ignoring others.\n\nLevels of abstraction in computing:\n\n1. Hardware level: Physical components (transistors, circuits)\n2. Machine language: Binary instructions directly executed by CPU\n3. Assembly language: Human-readable representation of machine code\n4. High-level programming languages: Python, Java, etc.\n5. Applications: Programs that users interact with\n\nBenefits of abstraction:\n- Manages complexity by hiding unnecessary details\n- Allows focus on relevant aspects of a problem\n- Enables reuse of solutions across different contexts\n- Supports collaboration by defining clear interfaces\n\nExample: When using a mobile app, users interact with a high-level interface without needing to understand the underlying code, operating system, or hardware components."
+    }
+  }
+}

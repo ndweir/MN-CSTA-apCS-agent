@@ -1,0 +1,21 @@
+{
+  "title": "Unit 1: Primitive Types",
+  "description": "This unit introduces Java primitive data types, variable declarations, and operators.",
+  "topics": {
+    "variables": {
+      "title": "Variables and Data Types",
+      "keywords": ["variable", "data type", "primitive", "int", "double", "boolean", "char"],
+      "content": "In Java, variables are used to store data that can be used and manipulated throughout a program. Each variable has a data type that determines what kind of value it can hold.\n\nJava has eight primitive data types:\n- int: Stores whole numbers (e.g., 42)\n- double: Stores decimal numbers (e.g., 3.14)\n- boolean: Stores true or false values\n- char: Stores a single character (e.g., 'A')\n- byte: Stores whole numbers from -128 to 127\n- short: Stores whole numbers from -32,768 to 32,767\n- long: Stores whole numbers with a wider range than int\n- float: Stores decimal numbers with less precision than double\n\nTo declare a variable, specify its type followed by a name:\n```java\nint age = 17;\ndouble gpa = 3.85;\nboolean isEnrolled = true;\nchar grade = 'A';\n```"
+    },
+    "operators": {
+      "title": "Arithmetic Operators",
+      "keywords": ["operator", "arithmetic", "addition", "subtraction", "multiplication", "division", "modulus"],
+      "content": "Java provides several arithmetic operators for performing calculations:\n\n- Addition (+): Adds two values\n- Subtraction (-): Subtracts one value from another\n- Multiplication (*): Multiplies two values\n- Division (/): Divides one value by another\n- Modulus (%): Returns the remainder of a division operation\n\nExample:\n```java\nint sum = 5 + 3;      // 8\nint difference = 10 - 4; // 6\nint product = 3 * 7;    // 21\nint quotient = 20 / 4;   // 5\nint remainder = 10 % 3;  // 1\n```\n\nNote that when dividing two integers, the result is an integer (decimal part is truncated):\n```java\nint result = 7 / 2;  // result is 3, not 3.5\n```\n\nTo get a decimal result, at least one operand must be a double:\n```java\ndouble result = 7.0 / 2;  // result is 3.5\n```"
+    },
+    "casting": {
+      "title": "Type Casting",
+      "keywords": ["cast", "casting", "type conversion", "widening", "narrowing"],
+      "content": "Type casting is the process of converting a value from one data type to another.\n\nWidening Casting (automatic) - converting a smaller type to a larger type:\n```java\nint myInt = 9;\ndouble myDouble = myInt; // Automatic casting: int to double\n```\n\nNarrowing Casting (manual) - converting a larger type to a smaller type:\n```java\ndouble myDouble = 9.78;\nint myInt = (int) myDouble; // Manual casting: double to int (value becomes 9)\n```\n\nWhen casting from a double to an int, the decimal portion is truncated (not rounded)."
+    }
+  }
+}
