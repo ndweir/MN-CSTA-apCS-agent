@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for, send_from_directory, session
+from urllib.parse import urlparse
 from flask_session import Session
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -350,25 +351,37 @@ def admin():
 def upload_file():
     if 'file' not in request.files:
         flash('No file part')
-        return redirect(request.url)
+        target_url = request.url.replace('\\', '')
+        if not urlparse(target_url).netloc and not urlparse(target_url).scheme:
+            return redirect(target_url, code=302)
+        return redirect(url_for('admin'))
     
     file = request.files['file']
     allowed_curriculum_types = ['ap_cs_a', 'ap_cs_principles']
     curriculum_type = request.form.get('curriculum_type', 'ap_cs_a')
     if curriculum_type not in allowed_curriculum_types:
         flash('Invalid curriculum type')
-        return redirect(request.url)
+        target_url = request.url.replace('\\', '')
+        if not urlparse(target_url).netloc and not urlparse(target_url).scheme:
+            return redirect(target_url, code=302)
+        return redirect(url_for('admin'))
     
     if file.filename == '':
         flash('No selected file')
-        return redirect(request.url)
+        target_url = request.url.replace('\\', '')
+        if not urlparse(target_url).netloc and not urlparse(target_url).scheme:
+            return redirect(target_url, code=302)
+        return redirect(url_for('admin'))
     
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         save_path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], curriculum_type, filename))
         if not save_path.startswith(os.path.normpath(app.config['UPLOAD_FOLDER'])):
             flash('Invalid file path')
-            return redirect(request.url)
+            target_url = request.url.replace('\\', '')
+            if not urlparse(target_url).netloc and not urlparse(target_url).scheme:
+                return redirect(target_url, code=302)
+            return redirect(url_for('admin'))
         file.save(save_path)
         
         # Reload curriculum data
@@ -378,7 +391,10 @@ def upload_file():
         return redirect(url_for('admin'))
     
     flash('Invalid file type')
-    return redirect(request.url)
+    target_url = request.url.replace('\\', '')
+    if not urlparse(target_url).netloc and not urlparse(target_url).scheme:
+        return redirect(target_url, code=302)
+    return redirect(url_for('admin'))
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
