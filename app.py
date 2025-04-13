@@ -448,4 +448,6 @@ except Exception as e:
     app.logger.error(f"Error loading curriculum or initializing database: {e}")
 
 if __name__ == '__main__':
+    # Use this for local development
     app.run(debug=True, port=5001)
+# For production on PythonAnywhere, the WSGI file will import the 'app' variable
